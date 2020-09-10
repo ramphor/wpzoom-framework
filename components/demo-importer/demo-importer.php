@@ -80,7 +80,14 @@ public function wpzoom_page_options_callback()
 
 public function enqueue_scripts()
 {
-    wp_enqueue_script('zoom-demo-importer', $this->get_js_uri('general.js'), array('jquery', 'underscore'), '1.0.0', true);
+    /**
+     * Load jQuery Cookies
+     *
+     * Reference: https://github.com/ramphor/wpzoom-framework/issues/3
+     */
+    wp_register_script('js-cookies', WPZOOM::$assetsPath . '/js/js.cookie.min.js', array( 'jquery' ), WPZOOM::$wpzoomVersion, true);
+
+    wp_enqueue_script('zoom-demo-importer', $this->get_js_uri('general.js'), array('jquery', 'underscore', 'js-cookies'), '1.0.0', true);
     if(current_theme_supports('wpz-multiple-demo-importer')){
         $localize_data = array(
             'nonce_set_selected_demo' => wp_create_nonce('set_selected_demo'),
