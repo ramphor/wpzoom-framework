@@ -398,7 +398,7 @@ jQuery(document).ready(function($) {
     mlu = {
 
     removeFile: function () {
-        $('.mlu_remove').live('click', function(event) {
+        $('body').on('click', '.mlu_remove', function(event) {
             $(this).hide();
             $(this).parents().parents().children('.upload').attr('value', '');
             $(this).parents('.screenshot').animate({ 'opacity' : 0, 'height' : 0 });
