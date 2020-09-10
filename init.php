@@ -36,17 +36,6 @@ if (!function_exists('get_the_image')) {
     require_once WPZOOM_INC . "/components/get-the-image.php";
 }
 
-/* Require shortcodes */
-if (option::is_on('framework_shortcodes_enable')) {
-    require_once WPZOOM_INC . "/components/shortcodes/shortcodes.php";
-    require_once WPZOOM_INC . "/components/shortcodes/init.php";
-}
-
-/* wzslider */
-if (option::is_on('framework_wzslider_enable')) {
-    require_once WPZOOM_INC . "/components/shortcodes/wzslider.php";
-}
-
 require_once WPZOOM_INC . "/components/theme/ui.php";
 
 if (!is_admin()) {
@@ -81,24 +70,97 @@ function zoom_load_components()
     $ignored_themes = get_deprecated_themes();
 
     if (!in_array(WPZOOM::$theme_raw_name, $ignored_themes)) {
-        require_once WPZOOM_INC . "/components/demo-importer/demo-importer.php";
-        new ZOOM_Demo_Importer;
 
-        require_once WPZOOM_INC . "/components/regenerate-thumbnails/wpzoom-regenerate-thumbnails.php";
-        new ZOOM_Regenerate_Thumbnails;
+        if ( is_admin() ) {
+            require_once WPZOOM_INC . "/components/demo-importer/demo-importer.php";
+            new ZOOM_Demo_Importer;
+
+            require_once WPZOOM_INC . "/components/child-theme/child-theme.php";
+        }
+
+        require_once WPZOOM_INC . "/components/theme-setup/wpzoom-theme-setup.php";
+        new WPZOOM_Theme_Setup;
 
 
         require_once WPZOOM_INC . "/components/theme-updater/theme-updater.php";
 
-        require_once WPZOOM_INC . "/components/customizer/wpzoom-customizer.php";
+        require_once WPZOOM_INC . "/components/customizer/setup.php";
 
-        if(is_readable(get_template_directory(). "/functions/customizer/customizer-data.php")){
+        require_once WPZOOM_INC . "/components/customizer/controls.php";
+
+        if( is_readable( get_template_directory(). "/functions/customizer/customizer-data.php") ) {
             require_once get_template_directory() . "/functions/customizer/customizer-data.php";
         }
 
-        new WPZOOM_Customizer(apply_filters('wpzoom_customizer_data', array()));
+        if( is_readable( get_template_directory(). "/functions/customizer/customizer-style-kits.php") ) {
+            require_once get_template_directory() . "/functions/customizer/customizer-style-kits.php";
+        }
+
+        new WPZOOM_Customizer_Controls( apply_filters( 'wpzoom_customizer_data_add_stylekits', apply_filters( 'wpzoom_customizer_data', array() ) ) );
+
+        require_once WPZOOM_INC . "/components/theme-tour/theme-tour.php";
+    }
+
+
+    if ( current_theme_supports( 'wpz-featured-posts-settings' ) && current_user_can( 'edit_posts' ) ) {
+
+        require_once WPZOOM_INC . "/components/featured-posts/wpzoom-featured-posts.php";
+
+        $featured_posts_directory_uri      = get_template_directory_uri() . '/functions/wpzoom/components/featured-posts/';
+        $list_table_checkbox_directory_uri = get_template_directory_uri() . '/functions/wpzoom/components/featured-posts/list-table-checkbox';
+        $wrapped_settings                  = get_theme_support( 'wpz-featured-posts-settings' );
+        $settings                          = array_pop( $wrapped_settings );
+
+        foreach ( $settings as $setting ) {
+            if ( $setting['show'] ) {
+
+                if ( ! empty( $setting['name'] ) ) {
+                    new WPZOOM_List_Table_Checkbox_Option_Type( $setting, $list_table_checkbox_directory_uri );
+                }
+
+                new WPZOOM_Featured_Posts( $setting, $featured_posts_directory_uri );
+            }
+        }
+    }
+
+    if( file_exists(get_template_directory() . '/functions/helper_guide.md')){
+        require_once WPZOOM_INC . "/components/helper-guide/wpzoom-helper-guide.php";
+        $helper_guide_directory_uri      = get_template_directory_uri() . '/functions/wpzoom/components/helper-guide/';
+
+        $markdown_url = get_template_directory_uri() . '/functions/helper_guide.md';
+        $helper_guide = new WPZOOM_Helper_Guide($helper_guide_directory_uri);
+
+        if( ! option::is_on( 'framework_helper_guide' )){
+            $helper_guide->init( $markdown_url );
+        }
+    }
+
+    if ( current_theme_supports( 'wpz-background-video-on-hover' ) ) {
+
+        init_video_background_on_hover_module();
+    }
+
+
+    /**
+     * Enabled wisdom tracker for framework.
+     */
+    if ( ! option::is_on( 'framework_track_data_enable' ) && ! class_exists( 'Plugin_Usage_Tracker' ) ) {
+        require_once WPZOOM_INC . "/components/tracking/class-plugin-usage-tracker.php";
+
+        $server_url = 'https://wpzoom.com';
+
+        new Plugin_Usage_Tracker(
+            get_template_directory() . '/functions.php',
+            $server_url,
+            array(),
+            true,
+            true,
+            2
+        );
 
     }
+
+
 }
 
 
@@ -121,9 +183,16 @@ function zoom_register_theme_required_plugins()
      * If the source is NOT from the .org repo, then source is also required.
      */
     $plugins = apply_filters('zoom_register_theme_required_plugins', array(
+
         array(
             'name' => 'Social Icons Widget by WPZOOM', // The plugin name.
             'slug' => 'social-icons-widget-by-wpzoom', // The plugin slug (typically the folder name).
+            'required' => false, // If false, the plugin is only 'recommended' instead of required.
+        ),
+
+        array(
+            'name' => 'Contact Form by WPForms', // The plugin name.
+            'slug' => 'wpforms-lite', // The plugin slug (typically the folder name).
             'required' => false, // If false, the plugin is only 'recommended' instead of required.
         )
     ));
@@ -150,8 +219,18 @@ function zoom_register_theme_required_plugins()
 }
 
 
-
 /**
  * Inject into Featured Plugins tab , our list of plugins.
  */
 add_filter('install_plugins_table_api_args_featured', 'zoom_callback_for_featured_plugins_tab');
+
+
+/**
+ * Beaver Builder Integration
+ */
+
+function wpz_bb_upgrade_link() {
+    return 'https://www.wpbeaverbuilder.com/wpzoom/?fla=463';
+}
+
+add_filter( 'fl_builder_upgrade_url', 'wpz_bb_upgrade_link' );

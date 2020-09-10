@@ -4,18 +4,22 @@
     /* Framework Admin Menu */
     "menu" => array(
 
-        array("id" => "4",
-            "name" => __("Miscellaneous", "wpzoom")),
+        array(
+            "id" => "4",
+            "name" => __("Miscellaneous", "wpzoom")
+        ),
 
         // 5 is reserved for styling
 
         "framework" => array(
-            "name" => __("Framework", "wpzoom")),
+            "name" => __("Framework", "wpzoom")
+        ),
 
         // 7 is reserved for banners
 
         "import-export" => array(
-            "name" => __("Import/Export", "wpzoom"))
+            "name" => __("Import/Export", "wpzoom")
+        ),
     ),
 
     /* Framework Admin Options */
@@ -78,17 +82,13 @@
             "std" => "on",
             "type" => "checkbox"),
 
-        array("name" => __("Enable WPZOOM Shortcodes", "wpzoom"),
-            "desc" => __("This enables the output of shortcodes.css in the HEAD section of your site.", "wpzoom"),
-            "id" => "framework_shortcodes_enable",
-            "std" => "on",
-            "type" => "checkbox"),
-
-        array("name" => __("Enable WPZOOM Slideshow Shortcode", "wpzoom"),
-            "desc" => __("This enables the output of slideshow libraries in the footer section of your site.", "wpzoom"),
-            "id" => "framework_wzslider_enable",
-            "std" => "on",
-            "type" => "checkbox"),
+        array(
+            "name" => __( "Disable Usage Tracking", "wpzoom" ),
+            "desc" => __( "Disable sending information to WPZOOM about how this theme is used.<br/><br/><strong>What information do we track?</strong><br>We track non-sensitive data about your WordPress site: theme in use, installed plugins, PHP version, etc. This information helps us improve our themes.", "wpzoom" ),
+            "id"   => "framework_track_data_enable",
+            "std"  => "off",
+            "type" => "checkbox"
+        ),
 
         array("type" => "preheader",
             "name" => __("Debug", "wpzoom")),
@@ -122,6 +122,7 @@
         array("name" => __("Load default widget settings", "wpzoom"),
             "desc" => __("Click on this button to load the default widget settings (as in theme demo).</br><em><strong>NOTE:</strong> Click on <strong>Save all changes</strong> button to save other modifications before loading default widgets.</em>", "wpzoom"),
             "id" => "misc_load_default_widgets",
+            "class" => "button-primary",
             "type" => "button"),
 
         array("name" => __("Import Widgets", "wpzoom"),
@@ -135,7 +136,8 @@
             "id" => "misc_export_widgets",
             "std" => "",
             "type" => "textarea")
-    )
+    ),
+
 
     /* end return */
 ));

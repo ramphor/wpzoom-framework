@@ -1,6 +1,150 @@
 ZOOM Framework Changelog
 ---------
 
+v 1.9.2 - August 30, 2020
+
+    - Fixed minor jQuery issues to preserve compatibility with future updates
+    - Minor bug fix with demo content importer on PHP 7.4
+
+
+v 1.9.1 - July 29, 2020
+
+    - Multiple bug fixes necessary for compatibility with WordPress 5.5
+
+
+v 1.9.0 - April 21, 2020
+
+    -  Added new option to install a Child Theme for your current WPZOOM theme. See details in Theme Options > Child Theme.
+
+
+v 1.8.12 - November 1, 2019
+
+    - Fixed a bug with Theme Options sections not working after previous update
+
+
+v 1.8.11 - October 30, 2019
+
+    - Multiple bug fixes and improvements necessary for compatibility with WordPress 5.3
+
+
+v 1.8.10 - August 13, 2019
+
+    - Improvements to Typography section in the Customizer
+    - Added a new component with GIPHY API integration to create easier short videos from YouTube and Vimeo links in specific themes
+
+
+v 1.8.9 - July 14, 2019
+
+    - Added new components to typography section in the Customizer for upcoming updates in several themes.
+
+
+v 1.8.8 - June 24, 2019
+
+    - Multiple improvements to Typography section in Customizer: added new web-safe (system) fonts, bug fixes, etc.
+
+
+v 1.8.7 - June 12, 2019
+
+    - Minor bug fix on older PHP versions (< 5.5).
+    *It's highly recommended to update WordPress (5.0+) and PHP (7.2+) before updating your Framework.
+
+
+v 1.8.6 - June 10, 2019
+
+    - Multiple improvements to Google Fonts integration
+
+
+v 1.8.5 - January 29, 2019
+
+    - Fixed a problem with Theme Options not saving on specific servers
+
+
+v 1.8.4 - January 22, 2019
+
+    - The notice about Shortcodes module migration was removed
+    - Minor fixes & improvements
+
+
+v 1.8.3 - December 13, 2018
+
+    - WPZOOM Shortcodes and Slideshow Shortcode have been removed from the framework and now are available as a separate plugin in plugins repository: WPZOOM Shortcodes
+    - Minor bug fixes in WordPress 5.0
+    - Added a new option in Theme Options > Framework Options to disable the helper guide icon (currently used only in Inspiro)
+
+
+v 1.8.2 - October 10, 2018
+
+    - Minor improvements to Demo Content Importer
+    - Added a new option to send usage data about our themes and your WordPress installation to WPZOOM. No sensitive data is tracked. Opt-in is optional and you can find more details here: http://wp.md/tracking
+    - Shortcodes module was NOT removed in this version.
+
+
+v 1.8.1 - September 27, 2018
+
+    - Minor fix with 1-click Updates. Shortcodes module was NOT removed in this version.
+
+
+v 1.8.0 - September 26, 2018
+
+    - NEW! 1-Click Theme Updates are now available for all WPZOOM themes. See WPZOOM > Theme License page for details after update.
+    - We've migrated WPZOOM Shortcodes and Slideshow Shortcode in a free plugin in order to keep the framework as simple as possible. Please go to Plugins > Add New, and install our new plugin "WPZOOM Shortcodes".
+
+
+v 1.7.9 - August 21, 2018
+
+    - Fixed a minor bug with Gutenberg in some themes
+
+
+v 1.7.8 - August 14, 2018
+
+    - Improvements to Demo Content Importer
+    - Fixed multiple components to work with Gutenberg.
+
+
+v 1.7.7 - July 5, 2018
+
+    - Added WPForms plugin in the list with recommended plugins
+
+
+v 1.7.6 - May 11, 2018
+
+    - Improved the support for Google Fonts API
+    - minor bug fixes
+
+
+v 1.7.5 - April 18, 2018
+
+    - Fixed a bug with Demo Content Importer
+
+
+v 1.7.4 - April 4, 2018
+
+    - Fixed a bug in WordPress 4.9.5 with incorrect size on images with caption in all themes.
+
+
+v 1.7.3 - March 12, 2018
+
+    - Minor improvements to Demo Content Importer
+
+
+v 1.7.2 - March 11, 2018
+
+    - Fixed a bug happening with Child Themes after updating to 1.7.1
+
+
+v 1.7.1 - March 10, 2018
+
+    - Numerous bug fixes.
+
+
+v 1.7.0 - January 16, 2018
+
+    - Numerous improvements in the process of importing the Demo Content
+    - Added option to remove the imported demo content
+    - Added option to regenerate only Featured Images in the process of importing the Demo Content
+    - Visual improvements in the Customizer's Typography and Colors sections in multiple themes.
+
+
 v 1.6.7 - November 13, 2017
 
     - Fixed compatibility issues with WordPress 4.9
@@ -85,7 +229,7 @@ v 1.4.4 - June 16, 2014
 
 v 1.4.3 - May 15, 2014
 
-    - Remove unecessary code.
+    - Remove unnecessary code.
 
     M   components/dashboard/dashboard.php
 
@@ -213,7 +357,7 @@ v 1.3.0 - July 20, 2012
     - Minor UI changes
     - New Features:
         - Theme Update Notification
-        - Keyboard shortcuts (j/k for navigation, Ctrl+S for saving modificaitons)
+        - Keyboard shortcuts (j/k for navigation, Ctrl+S for saving modifications)
         - "Framework" section in Theme Options
     - Most of the files were written
 
