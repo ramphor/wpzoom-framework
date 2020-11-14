@@ -93,6 +93,9 @@ class WPZOOM_Admin_Settings_Page {
     public static function content() {
         $options = option::$evoOptions;
 
+        if (isset($options['head_meta'])) {
+            unset($options['head_meta']);
+        }
         unset($options['menu']);
 
         $settings_ui = new WPZOOM_Admin_Settings_Interface;

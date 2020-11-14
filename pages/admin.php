@@ -19,22 +19,21 @@
         </div>
      </div><!-- /#zoomHead -->
 
+     <?php
+     if (!empty(option::$evoOptions['head_meta'])):
+     ?>
      <div class="head_meta">
         <div id="zoomInfo">
             <ul>
-                <?php if (!wpzoom::$tf) : ?>
-                <li class="documentation">
-                    <a href="https://www.wpzoom.com/documentation/<?php echo str_replace('_', '-', WPZOOM::$theme_raw_name); ?>" target="_blank"><?php _e('Theme Documentation', 'wpzoom'); ?></a>
+                <?php foreach(option::$evoOptions['head_meta'] as $meta => $args): ?>
+                <li class="<?php echo $meta; ?>">
+                    <a href="<?php echo $args['url'] ?>" target="_blank"><?php echo $args['text']; ?></a>
                 </li>
-                <?php endif; ?>
-
-                <li class="support">
-                    <a href="https://www.wpzoom.com/support/" target="_blank"><?php _e('Support Desk', 'wpzoom'); ?></a>
-                </li>
+                <?php endforeach; ?>
             </ul>
         </div>
-
     </div>
+    <?php endif; ?>
 
     <div class="admin_main">
         <div id="zoomNav">
